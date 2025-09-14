@@ -1,0 +1,43 @@
+name: Deploy Docs
+
+on:
+  # 当推送到main分支时触发
+  push:
+    branches:
+      - main
+  # 允许手动触发工作流
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          # 如果使用submodules，需要设置为true
+          submodules: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build docs
+        run: npm run docs:build
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          # 文档构建输出目录
+          publish_dir: ./docs/.vitepress/dist
+          # 可选：设置提交消息
+          commit_message: 'deploy: update docs'
+          # 可选：部署到特定分支
+          publish_branch: gh-pages
