@@ -4,6 +4,7 @@ export default defineConfig({
   title: 'Lubanno7 Univer Sheet',
   description: '基于 Univer 的强大电子表格组件',
   lang: 'zh-CN',
+  base: '/lubanno7-univer-sheet-docs/',
   
   head: [
     ['link', { rel: 'icon', type: 'image/png', href: '/logo.png' }]
