@@ -152,6 +152,7 @@ interface Config {
   
   // 交互配置
   wheelNumberControl?: WheelNumberControl
+  scrollBehavior?: 'prevent-always' | 'stop-at-boundary' | 'allow-always'
   
   // 提示信息
   loadingMaskColor?: string
@@ -293,6 +294,7 @@ defaultConfig: {
     step: 1,
     shiftStep: 10
   },
+  scrollBehavior: 'stop-at-boundary',
   
   // 提示信息
   loadingMaskColor: '#3498db',
@@ -383,6 +385,7 @@ config: {
     step: 1,
     shiftStep: 5
   },
+  scrollBehavior: 'stop-at-boundary',
   
   // 自定义提示
   loadingMessage: '正在加载员工数据...',

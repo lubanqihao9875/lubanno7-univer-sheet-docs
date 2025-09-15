@@ -37,10 +37,7 @@ config: {
 config: {
   styleOptions: {
     width: '100%',             // 容器宽度
-    height: '500px',           // 容器高度
-    border: '1px solid #ccc',  // 边框样式
-    borderRadius: '4px',       // 圆角
-    boxShadow: '0 2px 8px rgba(0,0,0,0.1)'  // 阴影
+    height: '500px'            // 容器高度
   }
 }
 ```
@@ -121,6 +118,14 @@ config: {
     step: 1,
     shiftStep: 5
   }
+}
+```
+
+### 滚动行为
+
+```js
+config: {
+  scrollBehavior: 'stop-at-boundary' // 滚动行为，设为prevent-always'表示始终阻止滚轮的默认行为和事件冒泡，无论表格是否在滚动，设为'stop-at-boundary'表示仅当表格正在滚动时，阻止滚轮的默认行为和事件冒泡，设为'allow-always'表示始终允许滚轮事件的默认行为和冒泡
 }
 ```
 
@@ -211,6 +216,7 @@ config: {
     step: 1,
     shiftStep: 10
   },
+  scrollBehavior: 'stop-at-boundary',
   
   // 提示信息
   loadingMessage: '正在加载员工数据...',
