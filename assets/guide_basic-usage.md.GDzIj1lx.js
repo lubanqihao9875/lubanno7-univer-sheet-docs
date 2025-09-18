@@ -248,8 +248,8 @@ import{_ as i,c as a,o as n,ag as h}from"./chunks/framework.DqUKbNMe.js";const g
 <span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      ],</span></span>
 <span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">      // 完整配置选项</span></span>
 <span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      config: {</span></span>
-<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">        // 表格名称</span></span>
-<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">        sheetName: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;">&#39;MySheet&#39;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">,</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">        // 语言设置</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">        locale: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;">&#39;zh-CN&#39;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">,</span></span>
 <span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">        </span></span>
 <span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">        // 行操作权限</span></span>
 <span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">        allowInsertRow: </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">true</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">,</span></span>
@@ -266,9 +266,6 @@ import{_ as i,c as a,o as n,ag as h}from"./chunks/framework.DqUKbNMe.js";const g
 <span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">        // 提示文本</span></span>
 <span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">        loadingMessage: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;">&#39;数据加载中...&#39;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">,</span></span>
 <span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">        emptyDataText: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;">&#39;暂无数据&#39;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">,</span></span>
-<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">        </span></span>
-<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">        // 性能优化</span></span>
-<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">        batchSize: </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">500</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">,</span></span>
 <span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">        </span></span>
 <span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">        // 容器样式</span></span>
 <span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">        styleOptions: {</span></span>
