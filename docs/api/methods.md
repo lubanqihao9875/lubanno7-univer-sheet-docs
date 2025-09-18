@@ -32,7 +32,7 @@ export default {
     someFunction() {
       if (this.$refs.tableRef && this.$refs.tableRef.exposed) {
         const methods = this.$refs.tableRef.exposed.methods
-        methods.refreshTableData()
+        methods.recreateTable()
       }
     }
   }
@@ -42,21 +42,12 @@ export default {
 
 ## 表格控制方法
 
-### refreshTableData()
-
-刷新表格数据，重新渲染当前数据。
-
-```js
-// 刷新表格显示
-tableMethods.refreshTableData()
-```
-
 ### recreateTable()
 
-重新创建整个表格实例，用于结构性变更。
+重新创建整个表格实例。
 
 ```js
-// 当列配置发生重大变化时
+// 重新创建表格实例
 tableMethods.recreateTable()
 ```
 
@@ -237,6 +228,6 @@ rowIndices.forEach(index => {
 
 1. **初始化时机**: 大部分方法只有在 `tableInitialized` 事件触发后才可用
 2. **异步操作**: `endEditing()` 是异步方法，需要使用 `await`
-3. **数据同步**: 方法操作后可能需要调用 `refreshTableData()` 来更新显示
+3. **数据同步**: 可以调用 `recreateTable()` 方法来刷新表格数据，确保数据与 UI 同步
 4. **错误处理**: 建议为方法调用添加 try-catch 错误处理
 5. **性能考虑**: 批量操作时避免频繁调用刷新方法

@@ -132,10 +132,13 @@ data: [
 ```typescript
 interface Config {
   // 基础配置
-  sheetName?: string
+  locale?: string
   allowInsertRow?: boolean
   allowDeleteRow?: boolean
   autoRefreshOnPropChange?: boolean
+  
+  // 异步加载配置
+  asyncOptions?: AsyncOptions
   
   // UI配置
   showHeader?: boolean
@@ -159,15 +162,27 @@ interface Config {
   loadingMessage?: string
   emptyDataText?: string
   
-  // 性能配置
-  batchSize?: number
-  
   // 验证信息
   selectValidationErrorInfo?: string
   selectValidationErrorStop?: string
   
   // 操作提示
   messages?: Messages
+}
+```
+
+#### AsyncOptions 类型定义
+
+```typescript
+interface AsyncOptions {
+  isAsyncEnabled?: boolean
+  baseBatchSize?: number
+  loadHeaderBatchRatio?: number
+  mergeHeaderBatchRatio?: number
+  setColWidthBatchRatio?: number
+  loadDataBatchRatio?: number
+  updateReadonlyCellStylesBatchRatio?: number
+  setSelectCellDataValidationBatchRatio?: number
 }
 ```
 
@@ -246,11 +261,23 @@ interface Messages {
 ```js
 defaultConfig: {
   // 基础配置
-  sheetName: 'Sheet',
+  locale: 'zh-CN',
   allowInsertRow: true,
   allowDeleteRow: true,
   autoRefreshOnPropChange: false,
   
+  // 异步加载配置
+  asyncOptions: {
+    isAsyncEnabled: false,
+    baseBatchSize: 500,
+    loadHeaderBatchRatio: 1,
+    mergeHeaderBatchRatio: 1,
+    setColWidthBatchRatio: 1,
+    loadDataBatchRatio: 1,
+    updateReadonlyCellStylesBatchRatio: 1,
+    setSelectCellDataValidationBatchRatio: 1
+  },
+
   // UI配置
   showHeader: true,
   showToolbar: true,
@@ -301,9 +328,6 @@ defaultConfig: {
   loadingMessage: '数据加载中...',
   emptyDataText: '暂无数据',
   
-  // 性能配置
-  batchSize: 500,
-  
   // 验证信息
   selectValidationErrorInfo: '无效只是警告，该输入不在下拉列表中，但实际可以输入',
   selectValidationErrorStop: '请从下拉列表中选择一个值',
@@ -332,10 +356,22 @@ defaultConfig: {
 ```js
 config: {
   // 基础设置
-  sheetName: 'EmployeeData',
+  locale: 'zh-CN',
   allowInsertRow: true,
   allowDeleteRow: false,
   autoRefreshOnPropChange: true,
+  
+  // 异步加载配置
+  asyncOptions: {
+    isAsyncEnabled: true,
+    baseBatchSize: 500,
+    loadHeaderBatchRatio: 1,
+    mergeHeaderBatchRatio: 1,
+    setColWidthBatchRatio: 1,
+    loadDataBatchRatio: 1,
+    updateReadonlyCellStylesBatchRatio: 1,
+    setSelectCellDataValidationBatchRatio: 1
+  },
   
   // UI设置
   showHeader: true,
@@ -389,9 +425,6 @@ config: {
   
   // 自定义提示
   loadingMessage: '正在加载员工数据...',
-  emptyDataText: '暂无员工信息',
-  
-  // 性能优化
-  batchSize: 300
+  emptyDataText: '暂无员工信息'
 }
 ```

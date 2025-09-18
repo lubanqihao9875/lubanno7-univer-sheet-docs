@@ -285,8 +285,8 @@ export default {
       ],
       // 完整配置选项
       config: {
-        // 表格名称
-        sheetName: 'MySheet',
+        // 语言设置
+        locale: 'zh-CN',
         
         // 行操作权限
         allowInsertRow: true,
@@ -303,9 +303,6 @@ export default {
         // 提示文本
         loadingMessage: '数据加载中...',
         emptyDataText: '暂无数据',
-        
-        // 性能优化
-        batchSize: 500,
         
         // 容器样式
         styleOptions: {
