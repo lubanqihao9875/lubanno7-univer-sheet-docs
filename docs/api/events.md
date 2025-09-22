@@ -17,7 +17,6 @@ interface UpdateDataEvent {
   oldValue: any                        // 旧值
   newValue: any                        // 新值
   currentTableData: Array<Record<string, any>> // 当前所有表格数据
-  exposed: ExposedMethods              // 表格实例方法
 }
 ```
 
@@ -99,18 +98,6 @@ export default {
 </script>
 ```
 
-### tableDataRefreshed
-
-表格数据刷新完成时触发。
-
-**参数**: `RefreshEvent`
-
-```typescript
-interface RefreshEvent {
-  exposed: ExposedMethods  // 表格实例方法
-}
-```
-
 ### insertRow
 
 用户通过表格界面插入行时触发。
@@ -123,7 +110,6 @@ interface InsertRowEvent {
   insertRowStartIndex: number             // 插入开始索引
   insertRowEndIndex: number               // 插入结束索引
   currentTableData: Array<Record<string, any>>  // 当前所有表格数据
-  exposed: ExposedMethods                 // 表格实例方法
 }
 ```
 
@@ -180,7 +166,6 @@ interface DeleteRowEvent {
   deleteRowStartIndex: number             // 删除开始索引
   deleteRowEndIndex: number               // 删除结束索引
   currentTableData: Array<Record<string, any>>  // 当前所有表格数据
-  exposed: ExposedMethods                 // 表格实例方法
 }
 ```
 
@@ -196,7 +181,6 @@ interface RowInsertedEvent {
   insertedRowStartIndex: number             // 插入开始索引
   insertedRowEndIndex: number               // 插入结束索引
   currentTableData: Array<Record<string, any>>  // 当前所有表格数据
-  exposed: ExposedMethods                   // 表格实例方法
 }
 ```
 
@@ -212,7 +196,6 @@ interface RowUpdatedEvent {
   oldRow: Record<string, any>             // 更新前的行数据
   newRow: Record<string, any>             // 更新后的行数据
   currentTableData: Array<Record<string, any>>  // 当前所有表格数据
-  exposed: ExposedMethods                 // 表格实例方法
 }
 ```
 
@@ -229,7 +212,6 @@ interface CellClickEvent {
   clickedColumn: string            // 点击的列名
   clickedColumnIndex: number       // 列索引
   value: any                       // 单元格值
-  exposed: ExposedMethods          // 表格实例方法
 }
 ```
 
@@ -272,4 +254,57 @@ export default {
   }
 }
 </script>
+```
+
+### forbiddenAction
+
+操作被禁止时触发。
+
+**参数**: `ForbiddenActionEvent`
+
+```typescript
+interface ForbiddenActionEvent {
+  type: ForbiddenActionType  // 操作类型
+}
+```
+
+**使用示例**:
+
+```vue
+<template>
+  <Lubanno7UniverSheet
+    @forbiddenAction="handleForbiddenAction"
+  />
+</template>
+
+<script>
+export default {
+  methods: {
+    handleForbiddenAction(event) {
+      const { type } = event
+      console.log(`操作被禁止: ${type}`)
+      // 实现禁止操作后的逻辑
+    }
+  }
+}
+</script>
+```
+
+### ForbiddenActionType
+
+操作被禁止的类型。
+
+```typescript
+type ForbiddenActionType = 
+  'copyHeaderForbidden' // 复制表头被禁止
+  | 'insertRowInHeaderForbidden' // 插入行在表头被禁止
+  | 'deleteRowInHeaderForbidden' // 删除行在表头被禁止
+  | 'autoFillFromHeaderForbidden' // 从表头自动填充被禁止
+  | 'autoFillToHeaderForbidden' // 到表头自动填充被禁止
+  | 'autoFillReadOnlyCellForbidden' // 自动填充只读单元格被禁止
+  | 'mergeCellForbidden' // 合并单元格被禁止
+  | 'unmergeCellForbidden' // 取消合并单元格被禁止
+  | 'moveFromHeaderForbidden' // 从表头移动被禁止
+  | 'moveToHeaderForbidden' // 到表头移动被禁止
+  | 'moveReadOnlyCellForbidden' // 移动只读单元格被禁止
 ```

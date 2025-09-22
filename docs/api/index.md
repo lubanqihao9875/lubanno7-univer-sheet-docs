@@ -165,9 +165,6 @@ interface Config {
   // 验证信息
   selectValidationErrorInfo?: string
   selectValidationErrorStop?: string
-  
-  // 操作提示
-  messages?: Messages
 }
 ```
 
@@ -235,24 +232,6 @@ interface WheelNumberControl {
   isCellAllowed?: boolean | Function
   step?: number
   shiftStep?: number
-}
-```
-
-#### Messages 类型定义
-
-```typescript
-interface Messages {
-  insertRowError?: string
-  deleteRowError?: string
-  autoFillFromHeaderError?: string
-  autoFillToHeaderError?: string
-  mergeCellError?: string
-  unmergeCellError?: string
-  moveHeaderError?: string
-  moveToHeaderError?: string
-  copyHeaderError?: string
-  readonlyCellAutoFillError?: string
-  readonlyCellMoveError?: string
 }
 ```
 
@@ -330,22 +309,7 @@ defaultConfig: {
   
   // 验证信息
   selectValidationErrorInfo: '无效只是警告，该输入不在下拉列表中，但实际可以输入',
-  selectValidationErrorStop: '请从下拉列表中选择一个值',
-  
-  // 操作提示
-  messages: {
-    insertRowError: '表头区域不可插入行',
-    deleteRowError: '表头行不可删除',
-    autoFillFromHeaderError: '不可从表头行开始自动填充',
-    autoFillToHeaderError: '不可填充至表头行',
-    mergeCellError: '不支持合并单元格',
-    unmergeCellError: '不支持取消单元格合并',
-    moveHeaderError: '表头行不可移动',
-    moveToHeaderError: '不可移动内容至表头区域',
-    copyHeaderError: '表头行不可复制',
-    readonlyCellAutoFillError: '区域包含只读单元格无法自动填充',
-    readonlyCellMoveError: '区域包含只读单元格无法移动数据'
-  }
+  selectValidationErrorStop: '请从下拉列表中选择一个值'
 }
 ```
 
