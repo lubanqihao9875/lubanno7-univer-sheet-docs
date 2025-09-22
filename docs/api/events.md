@@ -199,9 +199,9 @@ interface RowUpdatedEvent {
 }
 ```
 
-### cellClicked
+### cellClick
 
-单元格被点击时触发。
+单元格点击时触发。
 
 **参数**: `CellClickEvent`
 
@@ -220,14 +220,14 @@ interface CellClickEvent {
 ```vue
 <template>
   <Lubanno7UniverSheet
-    @cellClicked="handleCellClicked"
+    @cellClick="handleCellClick"
   />
 </template>
 
 <script>
 export default {
   methods: {
-    handleCellClicked(event) {
+    handleCellClick(event) {
       const { clickedColumn, clickedRow, value } = event
       
       // 处理特定列的点击
@@ -297,6 +297,8 @@ export default {
 ```typescript
 type ForbiddenActionType = 
   'copyHeaderForbidden' // 复制表头被禁止
+  | 'pasteHeaderForbidden' // 粘贴表头被禁止
+  | 'pasteReadonlyCellForbidden' // 粘贴只读单元格被禁止
   | 'insertRowInHeaderForbidden' // 插入行在表头被禁止
   | 'deleteRowInHeaderForbidden' // 删除行在表头被禁止
   | 'autoFillFromHeaderForbidden' // 从表头自动填充被禁止
@@ -307,4 +309,6 @@ type ForbiddenActionType =
   | 'moveFromHeaderForbidden' // 从表头移动被禁止
   | 'moveToHeaderForbidden' // 到表头移动被禁止
   | 'moveReadOnlyCellForbidden' // 移动只读单元格被禁止
+  | 'clearHeaderContentForbidden' // 清除表头内容被禁止
+  | 'clearReadonlyCellContentForbidden' // 清除只读单元格内容被禁止
 ```

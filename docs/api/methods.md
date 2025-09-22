@@ -73,6 +73,56 @@ const currentData = tableMethods.getCurrentTableData()
 console.log('当前表格数据:', currentData)
 ```
 
+### getRowByIndex(index)
+
+获取指定索引的行数据。
+
+**参数**:
+- `index`: `number` - 行索引
+
+**返回值**: `Record<string, any>` - 行数据
+
+```js
+const row = tableMethods.getRowByIndex(0)
+console.log('第一行数据:', row)
+```
+
+### insertRowBefore(index, rowData)
+
+在指定索引前插入一行数据。
+
+**参数**:
+- `index`: `number` - 插入位置索引
+- `rowData`: `Record<string, any>` - 要插入的行数据
+
+```js
+const newRow = {
+  name: '新员工',
+  department: '技术部',
+  status: '在职'
+}
+
+tableMethods.insertRowBefore(0, newRow)
+```
+
+### insertRowAfter(index, rowData)
+
+在指定索引后插入一行数据。
+
+**参数**:
+- `index`: `number` - 插入位置索引
+- `rowData`: `Record<string, any>` - 要插入的行数据
+
+```js
+const newRow = {
+  name: '新员工',
+  department: '技术部',
+  status: '在职'
+}
+
+tableMethods.insertRowAfter(0, newRow)
+```
+
 ### insertRowToEnd(row)
 
 向表格末尾插入一行数据。
@@ -90,7 +140,7 @@ const newRow = {
 tableMethods.insertRowToEnd(newRow)
 ```
 
-### updateRowData(index, rowData, mergeWithExisting)
+### updateRow(index, rowData, mergeWithExisting)
 
 更新指定索引的行数据。
 
@@ -101,18 +151,116 @@ tableMethods.insertRowToEnd(newRow)
 
 ```js
 // 完全替换第一行数据
-tableMethods.updateRowData(0, {
+tableMethods.updateRow(0, {
   name: '更新后的姓名',
   age: 30
 }, false)
 
 // 部分更新第二行数据（合并模式）
-tableMethods.updateRowData(1, {
+tableMethods.updateRow(1, {
   status: '已离职',
   leaveDate: '2024-01-15'
 }, true)
 ```
 
+### deleteRow(index)
+
+删除指定索引的行数据。
+
+**参数**:
+- `index`: `number` - 行索引
+
+```js
+// 删除第一行
+tableMethods.deleteRow(0)
+```
+
+### getRowByFilter(filter)
+
+根据过滤条件获取第一个匹配行的行数据。
+
+**参数**:
+- `filter`: `Record<string, any>` - 过滤条件对象
+
+**返回值**: `Record<string, any>` - 匹配的行数据，未找到时返回 `undefined`
+
+```js
+// 查找第一个状态为"已完成"的行
+const row = tableMethods.getRowByFilter({
+  status: '已完成'
+})
+
+if (row) {
+  console.log('找到匹配行:', row)
+} else {
+  console.log('未找到匹配行')
+}
+```
+
+### getRowByFilterAll(filter)
+
+根据过滤条件获取所有匹配行的行数据数组。
+
+**参数**:
+- `filter`: `Record<string, any>` - 过滤条件对象
+
+**返回值**: `Array<Record<string, any>>` - 匹配的行数据数组，未找到时返回空数组
+
+```js
+// 查找所有状态为"已完成"的行
+const rows = tableMethods.getRowByFilterAll({
+  status: '已完成'
+})
+
+if (rows.length > 0) {
+  console.log('找到匹配行:', rows)
+} else {
+  console.log('未找到匹配行')
+}
+```
+
+### getRowIndexByFilter(filter)
+
+根据过滤条件获取第一个匹配行的索引。
+
+**参数**:
+- `filter`: `Record<string, any>` - 过滤条件对象
+
+**返回值**: `number` - 行索引，未找到时返回 -1
+
+```js
+// 查找第一个状态为"已完成"的行
+const rowIndex = tableMethods.getRowIndexByFilter({
+  status: '已完成'
+})
+
+if (rowIndex !== -1) {
+  console.log('找到匹配行，索引:', rowIndex)
+}
+```
+
+### getRowIndexByFilterAll(filter)
+
+根据过滤条件获取所有匹配行的索引数组。
+
+**参数**:
+- `filter`: `Record<string, any>` - 过滤条件对象
+
+**返回值**: `number[]` - 匹配行的索引数组
+
+```js
+// 查找所有技术部员工
+const rowIndices = tableMethods.getRowIndexByFilterAll({
+  department: '技术部'
+})
+
+console.log('技术部员工行索引:', rowIndices)
+
+// 为所有技术部员工设置特殊颜色
+rowIndices.forEach(index => {
+  tableMethods.setCellFontColor(index, 'department', '#0066cc')
+})
+```
 ## 编辑控制方法
 
 ### endEditing()
@@ -179,49 +327,6 @@ console.log('第3列的列名:', columnName)
 ```js
 const columnIndex = tableMethods.getColumnIndex('status')
 console.log('status列的索引:', columnIndex)
-```
-
-### getRowIndexByFilter(filter)
-
-根据过滤条件获取第一个匹配行的索引。
-
-**参数**:
-- `filter`: `Record<string, any>` - 过滤条件对象
-
-**返回值**: `number` - 行索引，未找到时返回 -1
-
-```js
-// 查找第一个状态为"已完成"的行
-const rowIndex = tableMethods.getRowIndexByFilter({
-  status: '已完成'
-})
-
-if (rowIndex !== -1) {
-  console.log('找到匹配行，索引:', rowIndex)
-}
-```
-
-### getRowIndexByFilterAll(filter)
-
-根据过滤条件获取所有匹配行的索引数组。
-
-**参数**:
-- `filter`: `Record<string, any>` - 过滤条件对象
-
-**返回值**: `number[]` - 匹配行的索引数组
-
-```js
-// 查找所有技术部员工
-const rowIndices = tableMethods.getRowIndexByFilterAll({
-  department: '技术部'
-})
-
-console.log('技术部员工行索引:', rowIndices)
-
-// 为所有技术部员工设置特殊颜色
-rowIndices.forEach(index => {
-  tableMethods.setCellFontColor(index, 'department', '#0066cc')
-})
 ```
 
 ## 方法调用注意事项

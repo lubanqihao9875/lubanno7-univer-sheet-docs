@@ -110,7 +110,7 @@ export default {
     :columns="columns"
     :data="tableData"
     @updateData="handleDataUpdate"
-    @cellClicked="handleCellClick"
+    @cellClick="handleCellClick"
   />
 </template>
 
@@ -147,7 +147,7 @@ export default {
       this.saveToServer(event)
     },
     handleCellClick(event) {
-      console.log('单元格被点击:', event)
+      console.log('单元格点击:', event)
       // 实现自定义点击逻辑
     },
     async saveToServer(updateData) {
@@ -180,7 +180,6 @@ export default {
   <div>
     <button @click="loadData">加载数据</button>
     <button @click="addRow">添加行</button>
-    <button @click="refreshTable">刷新表格</button>
     
     <Lubanno7UniverSheet
       ref="tableRef"
@@ -236,12 +235,6 @@ export default {
         createTime: new Date().toISOString().split('T')[0]
       }
       this.data.push(newRow)
-    },
-    // 手动刷新表格
-    refreshTable() {
-      if (this.$refs.tableRef) {
-        this.$refs.tableRef.refreshTableData()
-      }
     },
     // 表格初始化完成回调
     handleTableInit(event) {

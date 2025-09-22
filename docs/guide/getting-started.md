@@ -49,7 +49,7 @@ new Vue({
       :data="data"
       :config="config"
       @updateData="handleUpdateData"
-      @cellClicked="handleCellClicked"
+      @cellClick="handleCellClick"
     />
   </div>
 </template>
@@ -130,7 +130,7 @@ export default {
       // - newValue: 新值
       // - currentTableData: 当前所有表格数据
     },
-    handleCellClicked(event) {
+    handleCellClick(event) {
       console.log('单元格点击:', event)
       // event 包含点击的详细信息：
       // - clickedRow: 点击的行数据
