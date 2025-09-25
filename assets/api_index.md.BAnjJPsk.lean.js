@@ -1,0 +1,1 @@
+import{_ as i,c as a,o as n,ag as h}from"./chunks/framework.DqUKbNMe.js";const g=JSON.parse('{"title":"组件属性","description":"","frontmatter":{},"headers":[],"relativePath":"api/index.md","filePath":"api/index.md"}'),l={name:"api/index.md"};function k(p,s,t,E,e,r){return n(),a("div",null,[...s[0]||(s[0]=[h("",14)])])}const y=i(l,[["render",k]]);export{g as __pageData,y as default};
