@@ -1,314 +1,232 @@
 # 事件
 
-## 事件列表
+Lubanno7 Univer Sheet 提供了丰富的事件系统，让您可以响应用户操作和数据变化。
 
-### updateData
+## 事件监听
 
-当单元格数据被用户修改时触发。
-
-**参数**: `UpdateDataEvent`
-
-```typescript
-interface UpdateDataEvent {
-  changedRow: Record<string, any>      // 更新后的完整行数据
-  changedRowIndex: number              // 行索引
-  changedColumn: string                // 更新的列名
-  changedColumnIndex: number           // 列索引
-  oldValue: any                        // 旧值
-  newValue: any                        // 新值
-  currentTableData: Array<Record<string, any>> // 当前所有表格数据
-}
-```
-
-**使用示例**:
+通过 `@事件名` 或 `v-on:事件名` 的方式监听事件：
 
 ```vue
 <template>
   <Lubanno7UniverSheet
+    :columns="columns"
+    :data="data"
+    @tableInitialized="handleTableInitialized"
     @updateData="handleDataUpdate"
+    @cellClick="handleCellClick"
   />
 </template>
-
-<script>
-export default {
-  methods: {
-    handleDataUpdate(event) {
-      console.log('数据更新:', event)
-      
-      const { changedColumn, newValue, oldValue, changedRow } = event
-      
-      // 处理特定列的变化
-      if (changedColumn === 'status') {
-        if (newValue === '已完成') {
-          changedRow.completedAt = new Date().toISOString()
-        }
-      }
-      
-      // 保存到服务器
-      this.saveToServer(changedRow)
-    },
-    
-    saveToServer(rowData) {
-      console.log('保存数据到服务器:', rowData)
-      // 实现保存逻辑
-    }
-  }
-}
-</script>
 ```
+
+## 核心事件
 
 ### tableInitialized
 
-表格初始化完成时触发。
+表格初始化完成时触发。这是最重要的事件，提供组件方法的访问入口。
 
-**参数**: `InitEvent`
-
-```typescript
-interface InitEvent {
-  exposed: ExposedMethods  // 表格实例方法和属性
+```js
+handleTableInitialized({ exposed }) {
+  // exposed 包含组件的属性和方法
+  this.tableAPI = exposed
+  
+  // 访问 Univer 实例
+  console.log(exposed.attributes.univerInstance)
+  
+  // 调用组件方法
+  const data = exposed.methods.getTableData()
 }
 ```
 
-**使用示例**:
-
-```vue
-<template>
-  <Lubanno7UniverSheet
-    @tableInitialized="handleTableInitialized"
-  />
-</template>
-
-<script>
-export default {
-  methods: {
-    handleTableInitialized(event) {
-      console.log('表格初始化完成')
-      
-      const { exposed } = event
-      
-      // 可以访问表格的方法和属性
-      const currentData = exposed.methods.getCurrentTableData()
-      console.log('当前表格数据:', currentData)
-      
-      // 设置特殊样式
-      exposed.methods.setCellFontColor(0, 'status', '#ff0000')
+**事件参数**：
+```js
+{
+  exposed: {
+    attributes: {
+      defaultConfig: {},          // 默认配置
+      univerInstance: {},         // Univer 核心实例
+      univerAPIInstance: {}       // Univer API 实例
+    },
+    methods: {
+      getTableData: Function,     // 所有可用方法
+      insertRowAfter: Function,
+      // ... 其他方法
     }
   }
 }
-</script>
 ```
+
+## 数据变化事件
+
+### updateData
+
+单元格数据更新时触发。
+
+```js
+handleDataUpdate(params) {
+  console.log('数据更新:', params)
+  // 可以在这里同步数据到后端
+}
+```
+
+**事件参数**：
+```js
+{
+  changedRow: {},           // 变更后的行数据
+  changedRowIndex: 0,       // 行索引
+  changedColumn: 'name',    // 变更的列名
+  changedColumnIndex: 0,    // 列索引
+  oldValue: '原值',          // 原始值
+  newValue: '新值',          // 新值
+  currentTableData: []      // 当前所有数据
+}
+```
+
+## 行操作事件
 
 ### insertRow
 
-用户通过表格界面插入行时触发。
+通过右键菜单或快捷键插入行时触发。
 
-**参数**: `InsertRowEvent`
-
-```typescript
-interface InsertRowEvent {
-  insertRows: Array<Record<string, any>>  // 插入的行数据数组
-  insertRowStartIndex: number             // 插入开始索引
-  insertRowEndIndex: number               // 插入结束索引
-  currentTableData: Array<Record<string, any>>  // 当前所有表格数据
+```js
+handleInsertRow(params) {
+  console.log('插入行:', params)
 }
 ```
 
-**使用示例**:
-
-```vue
-<template>
-  <Lubanno7UniverSheet
-    @insertRow="handleInsertRow"
-  />
-</template>
-
-<script>
-export default {
-  methods: {
-    handleInsertRow(event) {
-      const { insertRows, insertRowStartIndex } = event
-      
-      // 为新插入的行设置默认值
-      insertRows.forEach((row, index) => {
-        row.id = this.generateId()
-        row.status = '草稿'
-        row.createdAt = new Date().toISOString()
-        
-        console.log(`第 ${insertRowStartIndex + index} 行已插入`)
-      })
-      
-      // 通知服务器
-      this.notifyServer('rows_inserted', insertRows)
-    },
-    
-    generateId() {
-      return Date.now().toString(36) + Math.random().toString(36).substr(2)
-    },
-    
-    notifyServer(action, data) {
-      console.log(`通知服务器: ${action}`, data)
-      // 实现通知逻辑
-    }
-  }
+**事件参数**：
+```js
+{
+  insertRows: [],              // 插入的行数据数组
+  insertRowStartIndex: 0,      // 插入开始位置
+  insertRowEndIndex: 0,        // 插入结束位置
+  currentTableData: []         // 当前所有数据
 }
-</script>
 ```
 
 ### deleteRow
 
-用户通过表格界面删除行时触发。
+通过右键菜单或快捷键删除行时触发。
 
-**参数**: `DeleteRowEvent`
+```js
+handleDeleteRow(params) {
+  console.log('删除行:', params)
+}
+```
 
-```typescript
-interface DeleteRowEvent {
-  deleteRows: Array<Record<string, any>>  // 删除的行数据数组
-  deleteRowStartIndex: number             // 删除开始索引
-  deleteRowEndIndex: number               // 删除结束索引
-  currentTableData: Array<Record<string, any>>  // 当前所有表格数据
+**事件参数**：
+```js
+{
+  deleteRows: [],              // 删除的行数据数组
+  deleteRowStartIndex: 0,      // 删除开始位置
+  deleteRowEndIndex: 0,        // 删除结束位置
+  currentTableData: []         // 当前所有数据
 }
 ```
 
 ### rowInserted
 
-通过组件方法手动插入行完成时触发。
+通过组件方法插入行时触发。
 
-**参数**: `RowInsertedEvent`
+```js
+handleRowInserted(params) {
+  console.log('行已插入:', params)
+}
+```
 
-```typescript
-interface RowInsertedEvent {
-  insertedRows: Array<Record<string, any>>  // 插入的行数据数组
-  insertedRowStartIndex: number             // 插入开始索引
-  insertedRowEndIndex: number               // 插入结束索引
-  currentTableData: Array<Record<string, any>>  // 当前所有表格数据
+**事件参数**：
+```js
+{
+  insertedRows: [],            // 插入的行数据数组
+  insertedRowStartIndex: 0,    // 插入开始位置
+  insertedRowEndIndex: 0,      // 插入结束位置
+  currentTableData: []         // 当前所有数据
 }
 ```
 
 ### rowUpdated
 
-通过组件方法手动更新行完成时触发。
+通过组件方法更新行时触发。
 
-**参数**: `RowUpdatedEvent`
-
-```typescript
-interface RowUpdatedEvent {
-  index: number                           // 更新的行索引
-  oldRow: Record<string, any>             // 更新前的行数据
-  newRow: Record<string, any>             // 更新后的行数据
-  currentTableData: Array<Record<string, any>>  // 当前所有表格数据
+```js
+handleRowUpdated(params) {
+  console.log('行已更新:', params)
 }
 ```
+
+**事件参数**：
+```js
+{
+  index: 0,                    // 更新的行索引
+  oldRow: {},                  // 更新前的行数据
+  newRow: {},                  // 更新后的行数据
+  currentTableData: []         // 当前所有数据
+}
+```
+
+## 交互事件
 
 ### cellClick
 
 单元格点击时触发。
 
-**参数**: `CellClickEvent`
-
-```typescript
-interface CellClickEvent {
-  clickedRow: Record<string, any>  // 点击的行数据
-  clickedRowIndex: number          // 行索引
-  clickedColumn: string            // 点击的列名
-  clickedColumnIndex: number       // 列索引
-  value: any                       // 单元格值
+```js
+handleCellClick(params) {
+  console.log('单元格点击:', params)
 }
 ```
 
-**使用示例**:
-
-```vue
-<template>
-  <Lubanno7UniverSheet
-    @cellClick="handleCellClick"
-  />
-</template>
-
-<script>
-export default {
-  methods: {
-    handleCellClick(event) {
-      const { clickedColumn, clickedRow, value } = event
-      
-      // 处理特定列的点击
-      if (clickedColumn === 'avatar') {
-        this.showUserProfile(clickedRow.id)
-      }
-      
-      if (clickedColumn === 'status') {
-        this.showStatusHistory(clickedRow.id)
-      }
-      
-      console.log(`点击了 ${clickedColumn} 列，值为: ${value}`)
-    },
-    
-    showUserProfile(userId) {
-      console.log(`显示用户 ${userId} 的资料`)
-      // 实现显示用户资料逻辑
-    },
-    
-    showStatusHistory(itemId) {
-      console.log(`显示项目 ${itemId} 的状态历史`)
-      // 实现显示状态历史逻辑
-    }
-  }
+**事件参数**：
+```js
+{
+  clickedRow: {},              // 点击的行数据
+  clickedRowIndex: 0,          // 行索引
+  clickedColumn: 'name',       // 列名
+  clickedColumnIndex: 0,       // 列索引
+  value: '单元格值'             // 单元格当前值
 }
-</script>
 ```
 
 ### forbiddenAction
 
-操作被禁止时触发。
+执行被禁止的操作时触发，用于用户提示。
 
-**参数**: `ForbiddenActionEvent`
-
-```typescript
-interface ForbiddenActionEvent {
-  type: ForbiddenActionType  // 操作类型
-}
-```
-
-**使用示例**:
-
-```vue
-<template>
-  <Lubanno7UniverSheet
-    @forbiddenAction="handleForbiddenAction"
-  />
-</template>
-
-<script>
-export default {
-  methods: {
-    handleForbiddenAction(event) {
-      const { type } = event
-      console.log(`操作被禁止: ${type}`)
-      // 实现禁止操作后的逻辑
-    }
+```js
+handleForbiddenAction(params) {
+  console.log('操作被禁止:', params)
+  
+  // 根据类型显示不同提示
+  switch (params.type) {
+    case 'copyHeaderForbidden':
+      this.$message.warning('不能复制表头')
+      break
+    case 'pasteReadonlyCellForbidden':
+      this.$message.warning('不能粘贴到只读单元格')
+      break
+    // ... 其他类型
   }
 }
-</script>
 ```
 
-### ForbiddenActionType
-
-操作被禁止的类型。
-
-```typescript
-type ForbiddenActionType = 
-  'copyHeaderForbidden' // 复制表头被禁止
-  | 'pasteHeaderForbidden' // 粘贴表头被禁止
-  | 'pasteReadonlyCellForbidden' // 粘贴只读单元格被禁止
-  | 'insertRowInHeaderForbidden' // 插入行在表头被禁止
-  | 'deleteRowInHeaderForbidden' // 删除行在表头被禁止
-  | 'autoFillFromHeaderForbidden' // 从表头自动填充被禁止
-  | 'autoFillToHeaderForbidden' // 到表头自动填充被禁止
-  | 'autoFillReadOnlyCellForbidden' // 自动填充只读单元格被禁止
-  | 'mergeCellForbidden' // 合并单元格被禁止
-  | 'unmergeCellForbidden' // 取消合并单元格被禁止
-  | 'moveFromHeaderForbidden' // 从表头移动被禁止
-  | 'moveToHeaderForbidden' // 到表头移动被禁止
-  | 'moveReadOnlyCellForbidden' // 移动只读单元格被禁止
-  | 'clearHeaderContentForbidden' // 清除表头内容被禁止
-  | 'clearReadonlyCellContentForbidden' // 清除只读单元格内容被禁止
+**事件参数**：
+```js
+{
+  type: 'copyHeaderForbidden' // 禁止操作的类型
+}
 ```
+
+**禁止操作类型**：
+- `copyHeaderForbidden` - 禁止复制表头
+- `pasteHeaderForbidden` - 禁止粘贴到表头
+- `pasteReadonlyCellForbidden` - 禁止粘贴到只读单元格
+- `insertRowInHeaderForbidden` - 禁止在表头插入行
+- `deleteRowInHeaderForbidden` - 禁止删除表头行
+- `autoFillFromHeaderForbidden` - 禁止从表头开始自动填充
+- `autoFillToHeaderForbidden` - 禁止填充到表头
+- `autoFillReadOnlyCellForbidden` - 禁止填充只读单元格
+- `mergeCellForbidden` - 禁止合并单元格
+- `unmergeCellForbidden` - 禁止取消合并单元格
+- `moveFromHeaderForbidden` - 禁止移动表头
+- `moveToHeaderForbidden` - 禁止移动到表头
+- `moveReadOnlyCellForbidden` - 禁止移动只读单元格
+- `clearHeaderContentForbidden` - 禁止清除表头内容
+- `clearReadonlyCellContentForbidden` - 禁止清除只读单元格内容

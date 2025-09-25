@@ -41,106 +41,16 @@ new Vue({
 
 ### 2. 局部引入组件
 
-```vue
-<template>
-  <div>
-    <Lubanno7UniverSheet
-      :columns="columns"
-      :data="data"
-      :config="config"
-      @updateData="handleUpdateData"
-      @cellClick="handleCellClick"
-    />
-  </div>
-</template>
-
-<script>
+```js
 import Lubanno7UniverSheet from 'lubanno7-univer-sheet'
 import 'lubanno7-univer-sheet/lib/index.css'
 
 export default {
-  // 局部注册组件
   components: {
     Lubanno7UniverSheet
-  },
-  // 数据定义
-  data() {
-    return {
-      // 列配置
-      columns: [
-        { prop: 'id', label: 'ID', width: 80 },
-        { prop: 'name', label: '姓名', width: 120 },
-        { prop: 'age', label: '年龄', width: 80 },
-        { prop: 'department', label: '部门', width: 150 },
-        { prop: 'email', label: '邮箱', width: 200 },
-        { prop: 'status', label: '状态', width: 100 }
-      ],
-      // 表格数据
-      data: [
-        {
-          id: 1,
-          name: '张三',
-          age: 28,
-          department: '技术部',
-          email: 'zhangsan@example.com',
-          status: '在职'
-        },
-        {
-          id: 2,
-          name: '李四',
-          age: 32,
-          department: '市场部',
-          email: 'lisi@example.com',
-          status: '在职'
-        },
-        {
-          id: 3,
-          name: '王五',
-          age: 26,
-          department: '人事部',
-          email: 'wangwu@example.com',
-          status: '离职'
-        }
-      ],
-      // 配置选项
-      config: {
-        styleOptions: {
-          width: '100%',
-          height: '400px'
-        },
-        commonStyle: {
-          fontSize: 14
-        },
-        headerStyle: {
-          backgroundColor: '#f0f0f0',
-          fontWeight: 'bold'
-        }
-      }
-    }
-  },
-  // 事件处理方法
-  methods: {
-    handleUpdateData(event) {
-      console.log('数据更新:', event)
-      // event 包含更新的详细信息：
-      // - changedRow: 更新后的行数据
-      // - changedRowIndex: 行索引
-      // - changedColumn: 更新的列名
-      // - oldValue: 旧值
-      // - newValue: 新值
-      // - currentTableData: 当前所有表格数据
-    },
-    handleCellClick(event) {
-      console.log('单元格点击:', event)
-      // event 包含点击的详细信息：
-      // - clickedRow: 点击的行数据
-      // - clickedRowIndex: 行索引
-      // - clickedColumn: 点击的列名
-      // - value: 单元格值
-    }
   }
+  // ...
 }
-</script>
 ```
 
 ## 最小化示例

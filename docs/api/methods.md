@@ -40,293 +40,235 @@ export default {
 </script>
 ```
 
-## 表格控制方法
+## 数据获取方法
 
-### recreateTable()
+### getTableData()
 
-重新创建整个表格实例。
-
-```js
-// 重新创建表格实例
-tableMethods.recreateTable()
-```
-
-### refreshTableCommonConfig()
-
-刷新表格通用配置，如样式、权限等。
+获取当前表格的所有数据。
 
 ```js
-// 应用新的配置
-tableMethods.refreshTableCommonConfig()
-```
-
-## 数据操作方法
-
-### getCurrentTableData()
-
-获取当前表格中的所有数据。
-
-**返回值**: `Array<Record<string, any>>`
-
-```js
-const currentData = tableMethods.getCurrentTableData()
-console.log('当前表格数据:', currentData)
+// 返回值：Array
+const data = this.tableAPI.methods.getTableData()
+console.log(data) // [{ name: '张三', age: 25 }, ...]
 ```
 
 ### getRowByIndex(index)
 
-获取指定索引的行数据。
+根据索引获取指定行数据。
 
-**参数**:
-- `index`: `number` - 行索引
-
-**返回值**: `Record<string, any>` - 行数据
+- **参数**: `index` (number) - 行索引（从 0 开始）
+- **返回值**: `object | null` - 行数据对象，索引无效时返回 null
 
 ```js
-const row = tableMethods.getRowByIndex(0)
-console.log('第一行数据:', row)
+const row = this.tableAPI.methods.getRowByIndex(0)
+console.log(row) // { name: '张三', age: 25 }
 ```
+
+### getRowByFilter(filter)
+
+根据筛选条件获取第一个匹配的行。
+
+- **参数**: `filter` (object) - 筛选条件对象
+- **返回值**: `object | null` - 匹配的行数据，无匹配时返回 null
+
+```js
+const row = this.tableAPI.methods.getRowByFilter({ name: '张三' })
+console.log(row) // { name: '张三', age: 25 }
+```
+
+### getRowByFilterAll(filter)
+
+根据筛选条件获取所有匹配的行。
+
+- **参数**: `filter` (object) - 筛选条件对象
+- **返回值**: `Array` - 匹配的行数据数组
+
+```js
+const rows = this.tableAPI.methods.getRowByFilterAll({ age: 25 })
+console.log(rows) // [{ name: '张三', age: 25 }, ...]
+```
+
+### getRowIndexByFilter(filter)
+
+根据筛选条件获取第一个匹配行的索引。
+
+- **参数**: `filter` (object) - 筛选条件对象
+- **返回值**: `number` - 行索引，无匹配时返回 -1
+
+```js
+const index = this.tableAPI.methods.getRowIndexByFilter({ name: '张三' })
+console.log(index) // 0
+```
+
+### getRowIndexByFilterAll(filter)
+
+根据筛选条件获取所有匹配行的索引数组。
+
+- **参数**: `filter` (object) - 筛选条件对象
+- **返回值**: `Array<number>` - 匹配行的索引数组
+
+```js
+const indices = this.tableAPI.methods.getRowIndexByFilterAll({ age: 25 })
+console.log(indices) // [0, 2, 5]
+```
+
+## 表格信息方法
+
+### getTableHeaderRowCount()
+
+获取表头行数。
+
+```js
+const headerRows = this.tableAPI.methods.getTableHeaderRowCount()
+console.log(headerRows) // 1 或更多（嵌套表头）
+```
+
+### getTableDataRowCount()
+
+获取数据行数。
+
+```js
+const dataRows = this.tableAPI.methods.getTableDataRowCount()
+console.log(dataRows) // 实际数据行数
+```
+
+### getTableRowCount()
+
+获取总行数（表头 + 数据）。
+
+```js
+const totalRows = this.tableAPI.methods.getTableRowCount()
+console.log(totalRows) // 表头行数 + 数据行数
+```
+
+### getTableColumnCount()
+
+获取总列数。
+
+```js
+const columnCount = this.tableAPI.methods.getTableColumnCount()
+console.log(columnCount) // 扁平化后的列数
+```
+
+## 行操作方法
 
 ### insertRowBefore(index, rowData)
 
-在指定索引前插入一行数据。
+在指定索引前插入行。
 
-**参数**:
-- `index`: `number` - 插入位置索引
-- `rowData`: `Record<string, any>` - 要插入的行数据
+- **参数**:
+  - `index` (number) - 插入位置索引
+  - `rowData` (object) - 新行数据
 
 ```js
-const newRow = {
-  name: '新员工',
-  department: '技术部',
-  status: '在职'
-}
-
-tableMethods.insertRowBefore(0, newRow)
+this.tableAPI.methods.insertRowBefore(1, {
+  name: '新用户',
+  age: 28
+})
 ```
 
 ### insertRowAfter(index, rowData)
 
-在指定索引后插入一行数据。
+在指定索引后插入行。
 
-**参数**:
-- `index`: `number` - 插入位置索引
-- `rowData`: `Record<string, any>` - 要插入的行数据
+- **参数**:
+  - `index` (number) - 插入位置索引
+  - `rowData` (object) - 新行数据
 
 ```js
-const newRow = {
-  name: '新员工',
-  department: '技术部',
-  status: '在职'
-}
-
-tableMethods.insertRowAfter(0, newRow)
+this.tableAPI.methods.insertRowAfter(1, {
+  name: '新用户',
+  age: 28
+})
 ```
 
-### insertRowToEnd(row)
+### insertRowToEnd(rowData)
 
-向表格末尾插入一行数据。
+在表格末尾插入行。
 
-**参数**:
-- `row`: `Record<string, any>` - 要插入的行数据
+- **参数**: `rowData` (object) - 新行数据
 
 ```js
-const newRow = {
-  name: '新员工',
-  department: '技术部',
-  status: '在职'
-}
-
-tableMethods.insertRowToEnd(newRow)
+this.tableAPI.methods.insertRowToEnd({
+  name: '新用户',
+  age: 28
+})
 ```
 
 ### updateRow(index, rowData, mergeWithExisting)
 
 更新指定索引的行数据。
 
-**参数**:
-- `index`: `number` - 行索引
-- `rowData`: `Record<string, any>` - 新的行数据
-- `mergeWithExisting`: `boolean` - 是否与现有数据合并（默认 `true`）
+- **参数**:
+  - `index` (number) - 行索引
+  - `rowData` (object) - 新的行数据
+  - `mergeWithExisting` (boolean) - 是否与现有数据合并，默认 true
 
 ```js
-// 完全替换第一行数据
-tableMethods.updateRow(0, {
-  name: '更新后的姓名',
-  age: 30
-}, false)
+// 部分更新（合并）
+this.tableAPI.methods.updateRow(0, { age: 26 })
 
-// 部分更新第二行数据（合并模式）
-tableMethods.updateRow(1, {
-  status: '已离职',
-  leaveDate: '2024-01-15'
-}, true)
+// 完全替换
+this.tableAPI.methods.updateRow(0, { name: '李四', age: 26 }, false)
 ```
 
 ### deleteRow(index)
 
-删除指定索引的行数据。
+删除指定索引的行。
 
-**参数**:
-- `index`: `number` - 行索引
-
-```js
-// 删除第一行
-tableMethods.deleteRow(0)
-```
-
-### getRowByFilter(filter)
-
-根据过滤条件获取第一个匹配行的行数据。
-
-**参数**:
-- `filter`: `Record<string, any>` - 过滤条件对象
-
-**返回值**: `Record<string, any>` - 匹配的行数据，未找到时返回 `undefined`
+- **参数**: `index` (number) - 要删除的行索引
 
 ```js
-// 查找第一个状态为"已完成"的行
-const row = tableMethods.getRowByFilter({
-  status: '已完成'
-})
-
-if (row) {
-  console.log('找到匹配行:', row)
-} else {
-  console.log('未找到匹配行')
-}
-```
-
-### getRowByFilterAll(filter)
-
-根据过滤条件获取所有匹配行的行数据数组。
-
-**参数**:
-- `filter`: `Record<string, any>` - 过滤条件对象
-
-**返回值**: `Array<Record<string, any>>` - 匹配的行数据数组，未找到时返回空数组
-
-```js
-// 查找所有状态为"已完成"的行
-const rows = tableMethods.getRowByFilterAll({
-  status: '已完成'
-})
-
-if (rows.length > 0) {
-  console.log('找到匹配行:', rows)
-} else {
-  console.log('未找到匹配行')
-}
-```
-
-### getRowIndexByFilter(filter)
-
-根据过滤条件获取第一个匹配行的索引。
-
-**参数**:
-- `filter`: `Record<string, any>` - 过滤条件对象
-
-**返回值**: `number` - 行索引，未找到时返回 -1
-
-```js
-// 查找第一个状态为"已完成"的行
-const rowIndex = tableMethods.getRowIndexByFilter({
-  status: '已完成'
-})
-
-if (rowIndex !== -1) {
-  console.log('找到匹配行，索引:', rowIndex)
-}
-```
-
-### getRowIndexByFilterAll(filter)
-
-根据过滤条件获取所有匹配行的索引数组。
-
-**参数**:
-- `filter`: `Record<string, any>` - 过滤条件对象
-
-**返回值**: `number[]` - 匹配行的索引数组
-
-```js
-// 查找所有技术部员工
-const rowIndices = tableMethods.getRowIndexByFilterAll({
-  department: '技术部'
-})
-
-console.log('技术部员工行索引:', rowIndices)
-
-// 为所有技术部员工设置特殊颜色
-rowIndices.forEach(index => {
-  tableMethods.setCellFontColor(index, 'department', '#0066cc')
-})
-```
-## 编辑控制方法
-
-### endEditing()
-
-结束当前的编辑状态。
-
-**返回值**: `Promise<void>`
-
-```js
-// 结束编辑并保存
-await tableMethods.endEditing()
-console.log('编辑已结束')
-```
-
-## 样式方法
-
-### setCellFontColor(rowIndex, columnName, color)
-
-设置指定单元格的字体颜色。
-
-**参数**:
-- `rowIndex`: `number` - 数据行索引（不包括表头）
-- `columnName`: `string` - 列名（对应 `column.prop`）
-- `color`: `string` - 颜色值
-
-**返回值**: `boolean` - 是否设置成功
-
-```js
-// 设置第一行状态列为红色
-const success = tableMethods.setCellFontColor(0, 'status', '#ff0000')
-
-if (success) {
-  console.log('字体颜色设置成功')
-} else {
-  console.log('字体颜色设置失败')
-}
+this.tableAPI.methods.deleteRow(0)
 ```
 
 ## 工具方法
 
-### getColumnName(colIndex)
+### getColumnName(columnIndex)
 
 根据列索引获取列名。
 
-**参数**:
-- `colIndex`: `number` - 列索引
-
-**返回值**: `string` - 列名
+- **参数**: `columnIndex` (number) - 列索引
+- **返回值**: `string` - 列的 prop 属性值
 
 ```js
-const columnName = tableMethods.getColumnName(2)
-console.log('第3列的列名:', columnName)
+const columnName = this.tableAPI.methods.getColumnName(0)
+console.log(columnName) // 'name'
 ```
 
 ### getColumnIndex(columnName)
 
 根据列名获取列索引。
 
-**参数**:
-- `columnName`: `string` - 列名
-
-**返回值**: `number` - 列索引，未找到时返回 -1
+- **参数**: `columnName` (string) - 列的 prop 属性值
+- **返回值**: `number` - 列索引，未找到时返回 -1
 
 ```js
-const columnIndex = tableMethods.getColumnIndex('status')
-console.log('status列的索引:', columnIndex)
+const columnIndex = this.tableAPI.methods.getColumnIndex('name')
+console.log(columnIndex) // 0
+```
+
+### endEditing()
+
+结束当前单元格的编辑状态。
+
+```js
+await this.tableAPI.methods.endEditing()
+```
+
+### setCellFontColor(rowIndex, columnName, color)
+
+设置指定单元格的字体颜色。
+
+- **参数**:
+  - `rowIndex` (number) - 数据行索引
+  - `columnName` (string) - 列名
+  - `color` (string) - 颜色值（如 '#ff0000'）
+- **返回值**: `boolean` - 设置是否成功
+
+```js
+const success = this.tableAPI.methods.setCellFontColor(0, 'name', '#ff0000')
+console.log(success) // true 或 false
 ```
 
 ## 方法调用注意事项
