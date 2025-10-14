@@ -189,18 +189,23 @@ sheet.on('forbiddenAction', (params) => {
 
 **禁止操作类型**：
 - `copyHeaderForbidden` - 禁止复制表头
+- `deleteRowInHeaderForbidden` - 禁止删除表头行
+- `editHeaderForbidden` - 禁止编辑表头
+- `editReadonlyCellForbidden` - 禁止编辑只读单元格
+- `insertRowInHeaderForbidden` - 禁止在表头插入行
+- `mergeCellForbidden` - 禁止合并单元格
+- `moveColsForbidden` - 禁止移动列
+- `moveFromHeaderForbidden` - 禁止移动表头
+- `moveFromHeaderRowForbidden` - 禁止移动表头行
+- `moveReadOnlyCellForbidden` - 禁止移动只读单元格
+- `moveToHeaderForbidden` - 禁止移动到表头
+- `moveToHeaderRowForbidden` - 禁止移动到表头行
 - `pasteHeaderForbidden` - 禁止粘贴到表头
 - `pasteReadonlyCellForbidden` - 禁止粘贴到只读单元格
-- `insertRowInHeaderForbidden` - 禁止在表头插入行
-- `deleteRowInHeaderForbidden` - 禁止删除表头行
+- `unmergeCellForbidden` - 禁止取消合并单元格
 - `autoFillFromHeaderForbidden` - 禁止从表头开始自动填充
 - `autoFillToHeaderForbidden` - 禁止填充到表头
 - `autoFillReadOnlyCellForbidden` - 禁止填充只读单元格
-- `mergeCellForbidden` - 禁止合并单元格
-- `unmergeCellForbidden` - 禁止取消合并单元格
-- `moveFromHeaderForbidden` - 禁止移动表头
-- `moveToHeaderForbidden` - 禁止移动到表头
-- `moveReadOnlyCellForbidden` - 禁止移动只读单元格
 - `clearHeaderContentForbidden` - 禁止清除表头内容
 - `clearReadonlyCellContentForbidden` - 禁止清除只读单元格内容
 

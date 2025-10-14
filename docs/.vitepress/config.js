@@ -11,7 +11,10 @@ export default {
     nav: [
       { text: '指南', link: '/guide/' },
       { text: 'API', link: '/api/' },
-      { text: 'GitHub', link: 'https://github.com/lubanqihao9875/lubanno7-univer-sheet' }
+      { text: '资源', link: '/resources/' }
+    ],
+    socialLinks: [
+      { icon: 'github', link: 'https://github.com/lubanqihao9875/lubanno7-univer-sheet' }
     ],
     sidebar: {
       '/guide/': [
@@ -33,6 +36,10 @@ export default {
             { text: '事件', link: '/api/events' },
           ]
         }
+      ],
+      '/resources/': [
+        { text: '常见问题', link: '/resources/' },
+        { text: '更新日志', link: '/resources/changelog' },
       ]
     },
     footer: {
