@@ -43,8 +43,8 @@ export default {
       ]
     },
     footer: {
-      message: '基于 MIT 许可发布',
-      copyright: 'Copyright © 2025-present lubanqihao9875'
+      message: 'Lubanno7UniverSheet 基于 MIT 许可发布',
+      copyright: '作者：lubanqihao9875'
     },
     search: {
       provider: 'local'

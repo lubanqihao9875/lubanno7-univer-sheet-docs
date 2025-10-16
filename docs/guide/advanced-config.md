@@ -89,7 +89,7 @@ const config = {
   zoom: 1,
   
   // 滚动行为
-  scrollBehavior: 'stop-at-boundary', // 可选值：'stop-at-boundary', 'prevent-always'
+  scrollBehavior: 'stop-at-boundary', // 可选值：'stop-at-boundary', 'prevent-always', 'allow-always'
   
   // 样式选项
   styleOptions: {

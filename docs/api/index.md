@@ -179,7 +179,7 @@ const config = {
 
 - **类型**: `String`
 - **默认值**: `'stop-at-boundary'`
-- **可选值**: `'stop-at-boundary'`, `'prevent-always'`
+- **可选值**: `'stop-at-boundary'`, `'prevent-always'`, `'allow-always'`
 - **描述**: 滚动行为设置。
 
 ```js
