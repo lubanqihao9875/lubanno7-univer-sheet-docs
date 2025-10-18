@@ -29,7 +29,7 @@ export default {
       ],
       '/api/': [
         {
-          text: 'API 参考',
+          text: 'API',
           items: [
             { text: '属性', link: '/api/' },
             { text: '方法', link: '/api/methods' },
@@ -38,8 +38,14 @@ export default {
         }
       ],
       '/resources/': [
-        { text: '常见问题', link: '/resources/' },
-        { text: '更新日志', link: '/resources/changelog' },
+        {
+          text: '资源',
+          items: [
+            { text: '常见问题', link: '/resources/' },
+            { text: '更新日志', link: '/resources/changelog' },
+            { text: '相关链接', link: '/resources/links' },
+          ]
+        }
       ]
     },
     footer: {
