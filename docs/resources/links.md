@@ -1,6 +1,6 @@
 # 相关链接
 
-## 以下是与Lubanno7UniverSheet相关的链接：
+## 以下是与Lubanno7UniverSheet相关的链接
 
 | 描述 | 链接 |
 | ---- | ---- |
