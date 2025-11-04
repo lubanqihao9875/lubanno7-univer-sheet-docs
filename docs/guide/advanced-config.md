@@ -14,8 +14,18 @@ const config = {
   // 暗黑模式
   darkMode: false,
   
-  // 加载提示文本
-  loadingMessage: '数据加载中...',
+  // 加载提示配置
+  loadingOptions: {
+    text: '数据加载中...',
+    maskBackgroundColor: 'rgba(255, 255, 255, 0.8)',
+    spinnerSize: 40,
+    spinnerCircleThickness: 4,
+    spinnerCircleColor: '#f3f3f3',
+    spinnerCircleHighlightColor: '#3498db',
+    spinnerAnimationDuration: '1s',
+    textColor: '#333333',
+    fontSize: 14
+  },
   
   // 主题
   theme: 'defaultTheme', // 可选值：'defaultTheme', 'greenTheme'
@@ -51,8 +61,13 @@ const config = {
     uncheckedValue: 0 
   },
   
-  // 空数据提示文本
-  emptyDataText: '暂无数据', 
+  // 空数据提示配置
+  emptyDataOptions: {
+    text: '暂无数据',
+    maskBackgroundColor: 'rgba(255, 255, 255, 0.9)',
+    textColor: '#666666',
+    fontSize: 16
+  },
   
   // 异步加载选项
   asyncOptions: {

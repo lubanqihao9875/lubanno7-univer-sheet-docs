@@ -126,15 +126,37 @@ const config = {
 }
 ```
 
-##### loadingMessage
+##### loadingOptions
 
-- **类型**: `String`
-- **默认值**: `'数据加载中...'`
-- **描述**: 加载提示文本。
+- **类型**: `Object`
+- **默认值**: 包含以下属性的对象
+- **描述**: 加载相关的配置项。
+
+| 属性 | 类型 | 默认值 | 描述 |
+| --- | --- | --- | --- |
+| text | String | '数据加载中...' | 加载提示文本 |
+| maskBackgroundColor | String | 'rgba(255, 255, 255, 0.8)' | 遮罩背景色 |
+| spinnerSize | Number | 40 | 加载图标大小 |
+| spinnerCircleThickness | Number | 4 | 加载图标圆环厚度 |
+| spinnerCircleColor | String | '#f3f3f3' | 加载图标圆环颜色 |
+| spinnerCircleHighlightColor | String | '#3498db' | 加载图标高亮颜色 |
+| spinnerAnimationDuration | String | '1s' | 加载动画持续时间 |
+| textColor | String | '#333333' | 文本颜色 |
+| fontSize | Number | 14 | 字体大小 |
 
 ```js
 const config = {
-  loadingMessage: '正在加载表格数据，请稍候...'
+  loadingOptions: {
+    text: '数据加载中...',
+    maskBackgroundColor: 'rgba(255, 255, 255, 0.8)',
+    spinnerSize: 40,
+    spinnerCircleThickness: 4,
+    spinnerCircleColor: '#f3f3f3',
+    spinnerCircleHighlightColor: '#3498db',
+    spinnerAnimationDuration: '1s',
+    textColor: '#333333',
+    fontSize: 14
+  }
 }
 ```
 
@@ -151,15 +173,27 @@ const config = {
 }
 ```
 
-##### emptyDataText
+##### emptyDataOptions
 
-- **类型**: `String`
-- **默认值**: `'暂无数据'`
-- **描述**: 空数据提示文本。
+- **类型**: `Object`
+- **默认值**: 包含以下属性的对象
+- **描述**: 空数据提示相关的配置项。
+
+| 属性 | 类型 | 默认值 | 描述 |
+| --- | --- | --- | --- |
+| text | String | '暂无数据' | 空数据提示文本 |
+| maskBackgroundColor | String | 'rgba(255, 255, 255, 0.9)' | 遮罩背景色 |
+| textColor | String | '#666666' | 文本颜色 |
+| fontSize | Number | 16 | 字体大小 |
 
 ```js
 const config = {
-  emptyDataText: '没有找到匹配的数据'
+  emptyDataOptions: {
+    text: '暂无数据',
+    maskBackgroundColor: 'rgba(255, 255, 255, 0.9)',
+    textColor: '#666666',
+    fontSize: 16
+  }
 }
 ```
 
